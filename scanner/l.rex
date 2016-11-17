@@ -19,6 +19,7 @@ EXPORT {
  */
 typedef struct {tPosition Pos; char* Value;} tint_const;
 typedef struct {tPosition Pos; char* value;} tfloat_const;
+typedef struct {tPosition Pos; char* Value;} tstring_const;
 
 
 /* There is only one "actual" token, during scanning. Therfore
@@ -32,6 +33,7 @@ typedef union {
   tPosition     Position;
   tint_const    int_const;
   tfloat_const float_const;
+  tstring_const string_const;
 } l_scan_tScanAttribute;
 
 /* Tokens are coded as int's, with values >=0
@@ -39,6 +41,7 @@ typedef union {
  */
 # define tok_int_const    1
 # define tok_float_const  2
+# define tok_string_const 4
 
 #define tok_begin 5
 #define tok_end 6
@@ -76,6 +79,10 @@ EOF {
     WritePosition(stderr, l_scan_Attribute.Position);
     fprintf(stderr, " Nicht abgecshlossener mehrzeiliger Kommentar\n");
     break;
+  case STR:
+    WritePosition(stderr, l_scan_Attribute.Position);
+    fprintf(stderr, " Nicht abgeschlossener String\n");
+    break;
   default:
     Message (" OOPS: that should not happen!!",
 	     xxFatal, l_scan_Attribute.Position);
@@ -91,7 +98,7 @@ DEFINE  /* some abbreviations */
 
 /* define start states, note STD is defined by default, separate several states by a comma */
 /* START STRING */
-START CMT
+START CMT, STR
 
 RULE
 
@@ -144,4 +151,31 @@ RULE
 /* Modula2-style nested comment */
 
 /* double quote delimited strings */
+#STD# \" :
+  {
+    yyStart(STR);
+    len = 0;
+  }
+
+#STR# (digit|letter|" ")+ : 
+  {
+    if (len + l_scan_TokenLength+1 >= MAX_STRING_LEN) {
+	    WritePosition (stderr, l_scan_Attribute.Position);
+	    fprintf (stderr, " String zu lang\n");
+	    len = 0;
+	  }
+
+    len += l_scan_GetWord(&string[len]);
+  }
+
+#STR# \" :
+  {
+    yyStart(STD);
+    string[len] = '\0';
+    l_scan_Attribute.string_const.Value = malloc(len);
+    strcpy(l_scan_Attribute.string_const.Value, string);
+    return tok_string_const;
+  }
+
+
 /**********************************************************************/

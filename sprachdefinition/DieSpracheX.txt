@@ -11,7 +11,7 @@ Startsymbol: <Programm>
 <Ziffer>	 ::= 0|1|2|3|4|5|6|7|8|9
 
 <Bezeichner> ::= <Buchstabe>{<Buchstabe>|<Ziffer>}
-<Satz> ::= <Buchstabe>{<Buchstabe>|<Ziffer>|<Leerzeichen>}
+<Satz> ::= <Buchstabe>|<Ziffer>|<Leerzeichen>{<Buchstabe>|<Ziffer>|<Leerzeichen>}
 
 <String> ::= 'String'
 <Integer> ::= 'int'

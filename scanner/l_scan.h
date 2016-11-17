@@ -22,6 +22,7 @@
  */
 typedef struct {tPosition Pos; char* Value;} tint_const;
 typedef struct {tPosition Pos; char* value;} tfloat_const;
+typedef struct {tPosition Pos; char* Value;} tstring_const;
 
 
 /* There is only one "actual" token, during scanning. Therfore
@@ -35,6 +36,7 @@ typedef union {
   tPosition     Position;
   tint_const    int_const;
   tfloat_const float_const;
+  tstring_const string_const;
 } l_scan_tScanAttribute;
 
 /* Tokens are coded as int's, with values >=0
@@ -42,13 +44,14 @@ typedef union {
  */
 # define tok_int_const    1
 # define tok_float_const  2
+# define tok_string_const 4
 
 #define tok_begin 5
 #define tok_end 6
 #define tok_plus 7
 
 
-/* line 51 "l_scan.h" */
+/* line 54 "l_scan.h" */
 
 # define l_scan_EofToken	0
 # define l_scan_xxMaxCharacter	255

@@ -45,6 +45,9 @@ int main (int argc, char *argv[])
       case tok_plus:
         printf("+\n");
         break;
+      case tok_string_const:
+        printf("string_const  : %s\n",l_scan_Attribute.string_const.Value);
+        break;
 	/* add code to emit your tokens here */
       default: fprintf (stderr, "FATAL ERROR, unknown token\n");
       }

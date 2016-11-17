@@ -72,8 +72,12 @@ EOF {
   case STD:
     /* ok */
     break;
+  case CMT:
+    WritePosition(stderr, l_scan_Attribute.Position);
+    fprintf(stderr, " Nicht abgecshlossener mehrzeiliger Kommentar\n");
+    break;
   default:
-    Message ("OOPS: that should not happen!!",
+    Message (" OOPS: that should not happen!!",
 	     xxFatal, l_scan_Attribute.Position);
     break;
   }
@@ -87,6 +91,7 @@ DEFINE  /* some abbreviations */
 
 /* define start states, note STD is defined by default, separate several states by a comma */
 /* START STRING */
+START CMT
 
 RULE
 
@@ -115,7 +120,26 @@ RULE
     printf(" Ich habe einen Kommentar gefunden\n");
   }
 
-/* C-style comment */
+/* Multiline comment */
+#STD# "'''": 
+  {
+    yyStart(CMT);
+    WritePosition(stdout, l_scan_Attribute.Position);
+    printf(" Begin eines mehrzeigligen Kommentars\n");
+  }
+
+#CMT# -{\t\n'}+ | ' | '':
+  {
+    
+  }
+
+#CMT# "'''":
+  {
+    yyStart(STD);
+    WritePosition(stdout, l_scan_Attribute.Position);
+    printf(" Ende des Kommentars\n");
+  }
+
 
 /* Modula2-style nested comment */
 

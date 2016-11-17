@@ -7,3 +7,20 @@ begin
 end
 BeGiN
 END
+'''
+dies ist ein mehrzeiliger kommentar
+'''
+'''
+bla
+bla bla
+bla bla bla
+'''
+
+'''
+'
+g
+''
+g
+'''
+
+'''

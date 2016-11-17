@@ -1,0 +1,98 @@
+﻿Die Sprache X	von Waldemar Merk, Patrick Treyer, Gabriel Zachmann
+
+Startsymbol: <Programm>
+
+<Programm> 	 ::= <Bezeichner><Variablendeklaration><Ausfuehrung> 
+
+<Buchstabe>  ::= ‘a‘|‘b‘|‘c‘|‘d‘|‘e‘|‘f‘|‘g‘|‘h‘|‘i‘|‘j‘|‘k‘|‘l‘|‘m‘|
+		     ‘n‘|‘o‘|‘p‘|‘q‘|‘r‘|‘s‘|‘t‘|‘u‘|‘v‘|‘w‘|‘x‘|‘y‘|‘z‘|
+		     ‘A‘|‘B‘|‘C‘|‘D‘|‘E‘|‘F‘|‘G‘|‘H‘|‘I‘|‘J‘|‘K‘|‘L‘|‘M‘|
+		      ‘N‘|‘O‘|‘P‘|‘Q‘|‘R‘|‘S‘|‘T‘|‘U‘|‘V‘|‘W‘|‘X‘|‘Y‘|‘Z‘
+<Ziffer>	 ::= 0|1|2|3|4|5|6|7|8|9
+
+<Bezeichner> ::= <Buchstabe>{<Buchstabe>|<Ziffer>}
+<Satz> ::= <Buchstabe>{<Buchstabe>|<Ziffer>|<Leerzeichen>}
+
+<String> ::= 'String'
+<Integer> ::= 'int'
+<Float> ::= 'float'
+
+<Leerzeichen> ::= ' '{' '}
+<Trennzeichen> ::= ';'
+
+<Variablenart> ::= 'input'|'output'| e
+<StringVariable>  ::= <Variablenart><String><Bezeichner>
+<IntegerVariable> ::= <Variablenart><Integer><Bezeichner>
+<FloatVariable>   ::= <Variablenart><Float><Bezeichner>
+
+<Number> ::= <Ziffer>{<Ziffer>}
+<Zahl> ::= <FloatVariable>|<IntegerVariable>|<Number>
+
+<Gleichoperator> ::= '='
+<Stringsymbol> ::= '"'
+<KlammerAuf> ::= '('
+<KlammerZu> ::= ')'
+
+<Variablendeklaration> ::= {(<StringVariable>|<IntegerVariable>| <FloatVariable>) <Trennzeichen>}
+
+<Ausfuehrung> ::= 'begin'<Block>'end'
+
+<Rechenoperator> ::= '+'|'-'|'*'|'/'|'%'
+<Stringoperator> ::= '+'
+<Vergleichsoperator> ::= '<'|'>'|'<='|'>='|'=='|'!='
+<Stringvergleichsoperator> ::= '=='|'!='
+<Logikoperator> ::= '&&'|'||'
+
+<Block> ::= {<Zuweisung>|<IfStatement>|<ForSchleife>|<WhileSchleife>}
+
+<Zuweisung> ::= (<IntegerVariable>|<FloatVariable)<Gleichoperator>  <Zahl>{<Rechenoperator><Zahl>}<Trennzeichen>
+<Zuweisung> ::= <StringVariable><Gleichoperator><StringBuilder><Trennzeichen>
+
+<Text> ::= <Konkatenation> | <StringVariable>
+<StringBuilder> ::= <Text>{<Stringoperator><Text>}
+<Konkatenation> ::= <Stringsymbol><Satz><Stringsymbol>
+
+<IfStatement> ::= if'[<Leerzeichen>]<Condition><Then> {(<ElseIfStatement><Then>)}<ElseStatement>
+<Condition> ::= <KlammerAuf><KlammerAuf><Term><KlammerZu> {<Logikoperator><KlammerAuf><Term><KlammerZu>}<KlammerZu>
+<Condition> ::= <KlammerAuf><Term><KlammerZu>
+<Then> ::= '{'{<Block>}'}'
+<ElseIfStatement> ::= 'else'<Leerzeichen><IfStatement>
+<ElseStatement> ::= 'else'<Then>
+
+<Term> ::= <Text><Stringvergleichsoperator><Text>
+<Term> ::= <Zahl><Vergleichsoperator><Zahl>
+
+<ForSchleife> ::= 'for'<KlammerAuf>(<Number>|<IntegerVariable>)<KlammerZu><Then>
+<WhileSchleife> ::= 'while'<Condition><Then>
+
+
+
+// Allgemeinwissen
+1. Vorrangregeln
+2. Rechenoperationen
+3. Vergleichsoperationen
+
+
+// n! mit Sprache x darstellen
+
+output int erg;
+int n;
+input int i;
+
+// Initialisierung
+output int erg = 1;
+//n = 5;
+int n = i;
+
+// Operation
+begin
+for(int i)
+{
+	output int erg = int erg * int n;
+	int n = int n - 1;
+}
+end
+
+
+
+

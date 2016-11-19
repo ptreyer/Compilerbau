@@ -19,6 +19,7 @@ EXPORT {
  */
 typedef struct {tPosition Pos; char* Value;} tint_const;
 typedef struct {tPosition Pos; char* Value;} tfloat_const;
+typedef struct {tPosition Pos; char* Value;} tidentifier;
 typedef struct {tPosition Pos; char* Value;} tstring_const;
 
 
@@ -33,6 +34,7 @@ typedef union {
   tPosition     Position;
   tint_const    int_const;
   tfloat_const float_const;
+  tidentifier identifier;
   tstring_const string_const;
 } l_scan_tScanAttribute;
 
@@ -41,11 +43,16 @@ typedef union {
  */
 # define tok_int_const    1
 # define tok_float_const  2
+# define tok_identifier   3
 # define tok_string_const 4
 
 #define tok_begin 5
 #define tok_end 6
 #define tok_plus 7
+
+#define tok_input 10
+#define tok_output 11
+#define tok_String 12
 
 } // EXPORT
 
@@ -58,7 +65,6 @@ LOCAL {
  /* user-defined local variables of the generated GetToken routine */
  #define MAX_STRING_LEN 2048
  char string[MAX_STRING_LEN+1]; int len;
- int NestingLevel = 0;
 }  // LOCAL
 
 DEFAULT {
@@ -119,12 +125,27 @@ RULE
   }
 
 /* case insensitive keywords: BEGIN PROCEDURE END CASE */
-#STD# {Bb}{Ee}{Gg}{Ii}{Nn}:{ return tok_begin; }
-#STD# {Ee}{Nn}{Dd}:{return tok_end;}
+/* #STD# {Bb}{Ee}{Gg}{Ii}{Nn}:{ return tok_begin; } */
+/* #STD# {Ee}{Nn}{Dd}:{return tok_end;} */
+
+/*keywords */
+#STD# begin:{ return tok_begin; }
+#STD# end:{return tok_end;}
 
 #STD# "+":{return tok_plus;}
 
+#STD# input: {return tok_input;}
+#STD# output: {return tok_output;}
+
+#STD# String: {return tok_String;}
+
 /* identifiers */
+#STD# letter (letter|digit)* :
+  {
+    l_scan_Attribute.identifier.Value = malloc(l_scan_TokenLength+1);
+    l_scan_GetWord(l_scan_Attribute.identifier.Value);
+    return tok_identifier;
+  }
 
 /* comment up to end of line */
 #STD# "#" ANY*:

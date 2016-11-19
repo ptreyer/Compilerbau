@@ -39,6 +39,9 @@ int main (int argc, char *argv[])
       case tok_float_const:
         printf ("float_const  : %s\n",l_scan_Attribute.float_const.Value);
         break;
+      case tok_identifier:
+        printf("identifier : %s\n", l_scan_Attribute.identifier.Value);
+        break;
       case tok_begin:
         printf("BEGIN\n");
         break;
@@ -50,6 +53,15 @@ int main (int argc, char *argv[])
         break;
       case tok_string_const:
         printf("string_const  : %s\n",l_scan_Attribute.string_const.Value);
+        break;
+      case tok_input:
+        printf("input\n");
+        break;
+      case tok_output:
+        printf("output\n");
+        break;
+      case tok_String:
+        printf("String\n");
         break;
 	/* add code to emit your tokens here */
       default: fprintf (stderr, "FATAL ERROR, unknown token\n");

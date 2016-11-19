@@ -22,6 +22,7 @@
  */
 typedef struct {tPosition Pos; char* Value;} tint_const;
 typedef struct {tPosition Pos; char* Value;} tfloat_const;
+typedef struct {tPosition Pos; char* Value;} tidentifier;
 typedef struct {tPosition Pos; char* Value;} tstring_const;
 
 
@@ -36,6 +37,7 @@ typedef union {
   tPosition     Position;
   tint_const    int_const;
   tfloat_const float_const;
+  tidentifier identifier;
   tstring_const string_const;
 } l_scan_tScanAttribute;
 
@@ -44,14 +46,19 @@ typedef union {
  */
 # define tok_int_const    1
 # define tok_float_const  2
+# define tok_identifier   3
 # define tok_string_const 4
 
 #define tok_begin 5
 #define tok_end 6
 #define tok_plus 7
 
+#define tok_input 10
+#define tok_output 11
+#define tok_String 12
 
-/* line 54 "l_scan.h" */
+
+/* line 61 "l_scan.h" */
 
 # define l_scan_EofToken	0
 # define l_scan_xxMaxCharacter	255

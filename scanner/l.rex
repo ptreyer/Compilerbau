@@ -18,7 +18,7 @@ EXPORT {
  * The first struct-field must be of type tPosition!
  */
 typedef struct {tPosition Pos; char* Value;} tint_const;
-typedef struct {tPosition Pos; char* value;} tfloat_const;
+typedef struct {tPosition Pos; char* Value;} tfloat_const;
 typedef struct {tPosition Pos; char* Value;} tstring_const;
 
 
@@ -111,6 +111,12 @@ RULE
 
 /* Please add rules for: (don't forget to adapt main()) */
 /* Float numbers */
+#STD# digit+.digit+ :
+  {
+    l_scan_Attribute.float_const.Value = malloc (l_scan_TokenLength+1);
+    l_scan_GetWord(l_scan_Attribute.float_const.Value);
+    return tok_float_const;
+  }
 
 /* case insensitive keywords: BEGIN PROCEDURE END CASE */
 #STD# {Bb}{Ee}{Gg}{Ii}{Nn}:{ return tok_begin; }
@@ -148,7 +154,6 @@ RULE
   }
 
 
-/* Modula2-style nested comment */
 
 /* double quote delimited strings */
 #STD# \" :

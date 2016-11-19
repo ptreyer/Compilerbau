@@ -21,7 +21,7 @@
  * The first struct-field must be of type tPosition!
  */
 typedef struct {tPosition Pos; char* Value;} tint_const;
-typedef struct {tPosition Pos; char* value;} tfloat_const;
+typedef struct {tPosition Pos; char* Value;} tfloat_const;
 typedef struct {tPosition Pos; char* Value;} tstring_const;
 
 

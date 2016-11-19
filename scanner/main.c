@@ -36,6 +36,9 @@ int main (int argc, char *argv[])
       case tok_int_const:
 	      printf ("int_const    : %s\n",l_scan_Attribute.int_const.Value);
 	      break;
+      case tok_float_const:
+        printf ("float_const  : %s\n",l_scan_Attribute.float_const.Value);
+        break;
       case tok_begin:
         printf("BEGIN\n");
         break;

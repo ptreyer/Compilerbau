@@ -32,9 +32,9 @@ all: $(MAIN)
 # Run the test suite
 test:
 	./$(MAIN) test0; echo
-#	./$(MAIN) test2; echo
-#	./$(MAIN) test3; echo
-#	./$(MAIN) test4; echo
+	./$(MAIN) test01; echo
+	./$(MAIN) test02; echo
+	./$(MAIN) test03; echo
 #	./$(MAIN) test5; echo
 
 ###############################################################################

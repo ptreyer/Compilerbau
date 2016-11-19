@@ -10,8 +10,14 @@ Startsymbol: <Programm>
 		      ‘N‘|‘O‘|‘P‘|‘Q‘|‘R‘|‘S‘|‘T‘|‘U‘|‘V‘|‘W‘|‘X‘|‘Y‘|‘Z‘
 <Ziffer>	 ::= 0|1|2|3|4|5|6|7|8|9
 
+
 <Bezeichner> ::= <Buchstabe>{<Buchstabe>|<Ziffer>}
 <Satz> ::= <Buchstabe>|<Ziffer>|<Leerzeichen>{<Buchstabe>|<Ziffer>|<Leerzeichen>}
+<Intconst> ::= <Ziffer>{<Ziffer>}
+<Floatconst> ::= <Ziffer>{<Ziffer>}'.'<Ziffer>{<Ziffer>}
+<Kommentar> ::= <EinzeiligerKommentar> | <MehrzeiligerKommentar>
+<EinzeiligerKommentar> ::= '#' { ALLES } '\n'
+<MehrzeiligerKommentar> ::= ' \'\'\' ' { ALLES | '\n' } ' \'\'\' ' 
 
 <String> ::= 'String'
 <Integer> ::= 'int'
@@ -25,8 +31,7 @@ Startsymbol: <Programm>
 <IntegerVariable> ::= <Variablenart><Integer><Bezeichner>
 <FloatVariable>   ::= <Variablenart><Float><Bezeichner>
 
-<Number> ::= <Ziffer>{<Ziffer>}
-<Zahl> ::= <FloatVariable>|<IntegerVariable>|<Number>
+<Zahl> ::= <FloatVariable>|<IntegerVariable>|<Intconst>|<Floatconst>
 
 <Gleichoperator> ::= '='
 <Stringsymbol> ::= '"'
@@ -62,7 +67,7 @@ Startsymbol: <Programm>
 <Term> ::= <Text><Stringvergleichsoperator><Text>
 <Term> ::= <Zahl><Vergleichsoperator><Zahl>
 
-<ForSchleife> ::= 'for'<KlammerAuf>(<Number>|<IntegerVariable>)<KlammerZu><Then>
+<ForSchleife> ::= 'for'<KlammerAuf>(<Intconst>|<IntegerVariable>)<KlammerZu><Then>
 <WhileSchleife> ::= 'while'<Condition><Then>
 
 
@@ -71,6 +76,7 @@ Startsymbol: <Programm>
 1. Vorrangregeln
 2. Rechenoperationen
 3. Vergleichsoperationen
+4. ALLES enthält alle möglichen Zeichen außer '\n'
 
 
 // n! mit Sprache x darstellen

@@ -2,6 +2,7 @@
  * Descr:    a simple scanner generated with rex
  * Kind:     REX scanner specification (solution)
  * Author:   Dr. Juergen Vollmer <juergen.vollmer@informatik-vollmer.de>
+ * Author:   Gabriel Zachmann, Patrick Treyer, Waldemar Merk 
  * $Id: l.rex.in,v 1.10 2014/05/14 08:46:39 vollmer Exp $
  */
 

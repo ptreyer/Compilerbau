@@ -1,0 +1,63 @@
+
+          @1 
+D ::= 	D . i |
+
+		  @2
+		D [ E ] |
+
+		  @3
+		D -> i |
+		 b1
+		*D |
+		 b2
+		i
+
+E ::= E + E | E * E | (E) | c | D
+
+
+		D		E		+		*		(		)		[		]		c		i		->		.
+
+First	*		(
+
+Follow	#
+		.		]
+		[		+
+		->		*
+		(		)
+		
+
+D ::= *D D' | i D'
+D'::= .iD' | [E]D' | ->i D' | e
+
+E ::= cE' | DE' | (E)E'
+E'::= +EE' |*EE' | e
+
+		E		E'		D		D'		+		*		(		)		[		]		c		i		->		.
+
+First	c		+		*		.
+		(		*		i		[
+				e				->
+								e
+
+				
+// Hier bin ich noch nicht fertig!!!
+Follow	#		#		#		#
+		)		)		)		)
+		+		+		+		+
+		*		*		*		*
+		]		]		]		]
+						.		.
+						[		[
+						->		->
+						
+						
+						
+				
+				
+		
+		
+		
+		
+		
+		
+		

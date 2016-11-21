@@ -2,6 +2,7 @@
  * Descr:    A simple scanner generated with rex
  * Kind:     C-main function, fully implemented solution
  * Author:   Dr. Juergen Vollmer <juergen.vollmer@informatik-vollmer.d
+ * Author:   Gabriel Zachmann, Patrick Treyer, Waldemar Merk 
  * $Id: main.c.in,v 1.4 2010/04/15 12:52:49 vollmer Exp $
  */
 

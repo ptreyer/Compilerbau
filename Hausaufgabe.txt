@@ -1,18 +1,22 @@
+Autor: Waldemar Merk
 
-          @1 
+
 D ::= 	D . i |
-
-		  @2
 		D [ E ] |
-
-		  @3
 		D -> i |
-		 b1
 		*D |
-		 b2
 		i
 
 E ::= E + E | E * E | (E) | c | D
+
+
+1. Welche (Teil-)Sprache beschreibt diese Grammatik (umgangsprachlich beschreiben)?
+
+Antwort: Arrayoperationen
+
+
+
+2. Bestimmen Sie die First-Follow-Mengen
 
 
 		D		E		+		*		(		)		[		]		c		i		->		.
@@ -26,6 +30,8 @@ Follow	#
 		(		)
 		
 
+4. Eliminieren Sie die Linksrekursion
+		
 D ::= *D D' | i D'
 D'::= .iD' | [E]D' | ->i D' | e
 
@@ -40,7 +46,6 @@ First	c		+		*		.
 								e
 
 				
-// Hier bin ich noch nicht fertig!!!
 Follow	#		#		#		#
 		)		)		)		)
 		+		+		+		+

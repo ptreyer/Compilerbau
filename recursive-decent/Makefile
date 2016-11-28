@@ -3,6 +3,7 @@
 # Descr:    A Recursive Decent Parser for expressions
 # Kind:     Makefile
 # Author:   Dr. Juergen Vollmer <Juergen.Vollmer@informatik-vollmer.de>
+# Author:   Waldemar Merk, Patrick Treyer, Gabriel Zachmann
 # $Id: Makefile,v 1.14 2007/06/03 16:54:53 vollmer Exp $
 ###############################################################################
 

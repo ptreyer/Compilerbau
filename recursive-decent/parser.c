@@ -2,6 +2,7 @@
  * Descr:    A recursive Decent Parser for expressions
  * Kind:     The parser (solution)
  * Author:   Dr. Juergen Vollmer <juergen.vollmer@informatik-vollmer.de>
+ * Author:   Waldemar Merk, Patrick Treyer, Gabriel Zachmann
  * $Id: parser.c.in,v 1.4 2013/05/06 12:09:14 vollmer Exp $
  */
 

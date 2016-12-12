@@ -1,0 +1,35 @@
+###############################################################################
+# Project:  COCKTAIL training
+# Descr:    LR parser for an expression language
+# Kind:     README
+# Author:   Prof. Dr. Juergen Vollmer <vollmer@dhbw-karlsruhe.de>
+# $Id: README,v 1.9 2011/05/05 14:00:40 vollmer Exp $
+###############################################################################
+
+This directory describes the implementation of an LR parser for
+arithmetic expressions.
+
+The files:
+	expr.pars	The parser specification (stub)
+	expr.scan	The scanner specification
+	main.c          C-main program
+	test*           Some test sources
+	expr-pars	the executable to be produced
+	Makefile
+	README
+
+	expr-solution.pars
+
+Exercises:
+  - Add other arithmetic (binary - / ^ unary + and -) operations.
+  - Add relational operators >, <, =
+  - Add boolean operators &, |, !
+  - Add the ternary conditional expression operator to the grammar
+    and write the evaluation rule.
+    Syntax:
+	condition ? then-expression : else-expression
+    Think about accosiactivity and operator precedence.
+  - Add identifiers to the parser and scanner
+  - Add comma separted list of expressions to the grammar, the root symbol
+    should be that comma separted list of expressions.
+  - Add more test sources to test your grammar

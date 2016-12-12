@@ -1,0 +1,97 @@
+/* Project:  COCKTAIL training
+ * Desc    A simple pocket computer (scanner, parser, evaluator)
+ * Kind:     Parser specification (solution)
+ * Autho   Prof. Dr. Juergen Vollmer <vollmer@dhbw-karlsruhe.de>
+ * $Id: expr.pars.in,v 1.6 2011/05/05 14:00:04 vollmer Exp $
+ */
+
+// Exercises:
+//  - Add other arithmetic (binary - / ^ unary + and -) operations.
+//  - Add relational operators >, <, =
+//  - Add boolean operators &, |, !
+//  - Add the ternary conditional expression operator to the grammar
+//    and write the evaluation rule.
+//    Syntax:
+//	condition ? then-expression : else-expression
+//    Think about accosiactivity and operator precedence.
+//  - Add identifiers to the parser and scanner
+//  - Add comma separted list of expressions to the grammar, the root symbol
+//    should be that comma separted list of expressions.
+//  - Add more test sources to test your grammar
+
+SCANNER expr_scan
+
+PARSER  expr_pars
+
+GLOBAL {
+ # include <stdio.h>
+ # include <math.h>
+}
+
+PREC LEFT  '?'
+     LEFT  '|'
+     LEFT  '&'
+     LEFT  '!'
+     NONE  '<' '>' '='
+     LEFT  '+' '-'
+     LEFT  '*' '/'
+     RIGHT '^'
+     LEFT UNARY
+
+RULE
+root 	= expr_l.
+
+expr_l	= <
+	= /* epsilon */
+	.
+ exprs  = <
+	= expr
+	.
+	= exprs ',' expr
+	.
+ > . /* exprs */
+> . /* expr_l */
+
+expr = <
+	= int_const
+	.
+	= float_const
+	.
+	= '(' expr ')'
+	.
+	= expr '+' expr
+	.
+	= expr '*' expr
+	.
+	= expr '-'expr
+	.
+	= expr '/' expr
+	.
+	= expr '^' expr
+	.
+	= expr '?' expr ':' expr
+	.
+	= '+' expr   PREC UNARY
+	.
+	= '-' expr   PREC UNARY
+	.
+	= expr '>' expr
+	.
+	= expr '<' expr
+	.
+	= expr '=' expr
+	.
+	= expr '&' expr
+	.
+	= expr '|' expr
+	.
+	= '!' expr   PREC UNARY
+	.
+	= identifier
+	.
+> . /* expr */
+
+/* Tokens */
+int_const:    [Value: long]   {Value := 0;      } .
+float_const:  [Value: double] {Value := 0.0;    } .
+identifier:   [Name:  tIdent] {Name  := NoIdent;} .

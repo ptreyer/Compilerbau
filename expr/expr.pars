@@ -1,0 +1,129 @@
+/* Project:  COCKTAIL training
+ * Desc    A simple pocket computer (scanner, parser, evaluator)
+ * Kind:     Parser specification (solution)
+ * Autho   Prof. Dr. Juergen Vollmer <vollmer@dhbw-karlsruhe.de>
+ * $Id: expr.pars.in,v 1.6 2011/05/05 14:00:04 vollmer Exp $
+ */
+
+// Exercises:
+//  - Add other arithmetic (binary - / ^ unary + and -) operations.
+//  - Add relational operators >, <, =
+//  - Add boolean operators &, |, !
+//  - Add the ternary conditional expression operator to the grammar
+//    and write the evaluation rule.
+//    Syntax:
+//	condition ? then-expression : else-expression
+//    Think about accosiactivity and operator precedence.
+//  - Add identifiers to the parser and scanner
+//  - Add comma separted list of expressions to the grammar, the root symbol
+//    should be that comma separted list of expressions.
+//  - Add more test sources to test your grammar
+
+SCANNER expr_scan
+
+PARSER  expr_pars
+
+GLOBAL {
+ # include <stdio.h>
+ # include <math.h>
+}
+
+PREC 
+     LEFT  '?'
+     LEFT  '|'
+     LEFT  '&'
+     LEFT  '!'
+     NONE  '<' '>' '='
+     LEFT  '+'
+     LEFT  '-'
+     LEFT  '*' '/'
+     RIGHT '^'
+     LEFT UNARY
+     
+
+RULE
+root 	= program.
+
+program = <
+  =expr.
+  =declaration_lo.
+  =assignment_lo.
+>.
+
+expr_l	= <
+	= /* epsilon */
+	.
+ exprs  = <
+	= expr
+	.
+	= exprs ',' expr
+	.
+ > . /* exprs */
+> . /* expr_l */
+
+expr = <
+	= int_const.
+	= float_const.
+	= '(' expr ')'.
+	= expr '|' expr.
+	= expr '+' expr.
+	= expr '-' expr.
+	= expr '*' expr.
+	= expr '/' expr.
+	= expr '<' expr.
+	= expr '>' expr.
+	= expr '=' expr.
+	= expr '&' expr.
+	= '-' expr PREC UNARY.
+	= '+' expr PREC UNARY.
+  = expr '^' expr.
+	/*= '!' expr PREC UNARY.*/
+	/*= expr '?' expr ':' expr.*/
+	= intVar.
+  = floatVar.	
+> . /* expr */
+
+stringExpr = <
+  = stringVar.
+  = string_const.
+  = stringExpr '+' stringExpr.
+>.
+
+varType = <
+  = input_tok.
+  = output_tok.
+  = . //epsilon
+>.
+
+stringVar = varType string_tok identifier.
+intVar    = varType int_tok identifier.
+floatVar  = varType float_tok identifier.
+
+declaration_lo = <
+  =. //epsilon
+  declaration_l = <
+    declaration = <
+      = stringVar ';'.
+      = intVar ';'.
+      = floatVar ';'.
+    >.
+    = declaration_l declaration.
+  >.
+>.
+assignment_lo = <
+  =. //epsilon
+  assignment_l = <
+    assignment = <
+      = intVar '=' expr ';'.
+      = floatVar '=' expr ';'.
+      = stringVar '=' stringExpr ';'.
+    >.
+    = assignment_l assignment.
+  >.
+>.
+
+/* Tokens */
+int_const:    [Value: long]   {Value := 0;      } .
+float_const:  [Value: double] {Value := 0.0;    } .
+string_const: [Value: tString]  {Value := NoString;   } .
+identifier:   [Name:  tIdent] {Name  := NoIdent;} .

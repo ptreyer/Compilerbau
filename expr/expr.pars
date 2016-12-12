@@ -45,9 +45,21 @@ RULE
 root 	= program.
 
 program = <
-  =expr.
   =declaration_lo.
-  =assignment_lo.
+  =stmt_lo.
+>.
+
+stmt_lo = <
+  =. //epsilon
+  stmt_l = <
+    stmt = <
+      = assignment.
+      = forLoop.
+      = whileLoop.
+      = expr.
+    >.
+    = stmt_l stmt.
+  >.
 >.
 
 expr_l	= <
@@ -121,6 +133,13 @@ assignment_lo = <
     = assignment_l assignment.
   >.
 >.
+
+forLoop = <
+  = for_tok '(' int_const ')' '{' stmt_lo '}'.
+  = for_tok '(' intVar ')' '{' stmt_lo '}'.
+>.
+
+whileLoop = while_tok '(' expr ')' '{' stmt_lo '}'.
 
 /* Tokens */
 int_const:    [Value: long]   {Value := 0;      } .

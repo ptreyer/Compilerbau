@@ -61,6 +61,10 @@ EOF {
     Message ("unclosed Modula-comment",
 	     xxError, expr_scan_Attribute.Position);
     break;
+  case STR:
+    Message ("String not closed", 
+      xxError, expr_scan_Attribute.Position);
+    break;
   default:
     Message ("OOPS: that should not happen!!",
 	     xxFatal, expr_scan_Attribute.Position);
@@ -133,6 +137,8 @@ INSERT RULES #STD#
 #STD# "float": {return float_tok;}
 #STD# "input": {return input_tok;}
 #STD# "output": {return output_tok;}
+#STD# "for": {return for_tok;}
+#STD# "while": {return while_tok;}
 
 #STD# \": {
   yyStart(STR);

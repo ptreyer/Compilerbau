@@ -2,4 +2,4 @@
 
 -- expect at least 1 errors
 
-3 + 4+
+i = 3 + 4+

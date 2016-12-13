@@ -29,13 +29,10 @@ GLOBAL {
 }
 
 PREC 
-     LEFT  '?'
      LEFT  '|'
      LEFT  '&'
-     LEFT  '!'
-     NONE  '<' '>' '='
-     LEFT  '+'
-     LEFT  '-'
+     LEFT  '<' '>' '='
+     LEFT  '+' '-'
      LEFT  '*' '/'
      RIGHT '^'
      LEFT UNARY
@@ -45,8 +42,10 @@ RULE
 root 	= program.
 
 program = <
-  =declaration_lo.
-  =stmt_lo.
+  = .
+  = declaration_l stmt_l .
+  =declaration_l.
+  =stmt_l.
 >.
 
 stmt_lo = <
@@ -56,7 +55,6 @@ stmt_lo = <
       = assignment.
       = forLoop.
       = whileLoop.
-      = expr.
       = ifCon.
     >.
     = stmt_l stmt.
@@ -92,25 +90,19 @@ expr = <
   = expr '^' expr.
 	/*= '!' expr PREC UNARY.*/
 	/*= expr '?' expr ':' expr.*/
-	= intVar.
-  = floatVar.	
+	= identifier.
+  = string_const .
 > . /* expr */
 
-stringExpr = <
-  = stringVar.
-  = string_const.
-  = stringExpr '+' stringExpr.
->.
-
 varType = <
-  = input_tok.
-  = output_tok.
+  = input.
+  = output.
   = . //epsilon
 >.
 
-stringVar = varType string_tok identifier.
-intVar    = varType int_tok identifier.
-floatVar  = varType float_tok identifier.
+stringVar = varType String identifier.
+intVar    = varType int identifier.
+floatVar  = varType float identifier.
 
 declaration_lo = <
   =. //epsilon
@@ -123,25 +115,17 @@ declaration_lo = <
     = declaration_l declaration.
   >.
 >.
-assignment_lo = <
-  =. //epsilon
-  assignment_l = <
     assignment = <
-      = intVar '=' expr ';'.
-      = floatVar '=' expr ';'.
-      = stringVar '=' stringExpr ';'.
+      = identifier '=' expr ';'.
     >.
-    = assignment_l assignment.
-  >.
->.
 
 forLoop = <
-  = for_tok '(' int_const ')' '{' stmt_lo '}'.
-  = for_tok '(' intVar ')' '{' stmt_lo '}'.
+  = for '(' int_const ')' '{' stmt_lo '}'.
+  = for '(' intVar ')' '{' stmt_lo '}'.
 >.
 
-whileLoop = while_tok '(' expr ')' '{' stmt_lo '}'.
-ifCon = if_tok '(' expr ')' '{' stmt_lo '}' else_tok '{' stmt_lo '}'.
+whileLoop = while '(' expr ')' '{' stmt_lo '}'.
+ifCon = if '(' expr ')' '{' stmt_lo '}' else '{' stmt_lo '}'.
 
 /* Tokens */
 int_const:    [Value: long]   {Value := 0;      } .

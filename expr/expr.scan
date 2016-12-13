@@ -132,16 +132,6 @@ RULES
 
 INSERT RULES #STD#
 
-#STD# "String": {return string_tok;}
-#STD# "int": {return int_tok;}
-#STD# "float": {return float_tok;}
-#STD# "input": {return input_tok;}
-#STD# "output": {return output_tok;}
-#STD# "for": {return for_tok;}
-#STD# "while": {return while_tok;}
-#STD# "if": {return if_tok;}
-#STD# "else": {return else_tok;}
-
 #STD# \": {
   yyStart(STR);
   len = 0;

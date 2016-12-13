@@ -1,6 +1,6 @@
 for (int i) {
-  int h=9;
+  h=9;
 }
-int i = 5;
+i = 5;
 for (5) {
 }

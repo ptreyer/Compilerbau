@@ -61,16 +61,6 @@ stmt_lo = <
   >.
 >.
 
-expr_l	= <
-	= /* epsilon */
-	.
- exprs  = <
-	= expr
-	.
-	= exprs ',' expr
-	.
- > . /* exprs */
-> . /* expr_l */
 
 expr = <
 	= int_const.
@@ -121,7 +111,7 @@ declaration_lo = <
 
 forLoop = <
   = for '(' int_const ')' '{' stmt_lo '}'.
-  = for '(' intVar ')' '{' stmt_lo '}'.
+  = for '(' identifier ')' '{' stmt_lo '}'.
 >.
 
 whileLoop = while '(' expr ')' '{' stmt_lo '}'.

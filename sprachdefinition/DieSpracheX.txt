@@ -2,7 +2,7 @@
 
 Startsymbol: <Programm>
 
-<Programm> 	 ::= <Bezeichner><Variablendeklaration><Ausfuehrung> 
+<Programm> 	 ::= [<Declarations>] [<Statements>] 
 
 <Buchstabe>  ::= ‘a‘|‘b‘|‘c‘|‘d‘|‘e‘|‘f‘|‘g‘|‘h‘|‘i‘|‘j‘|‘k‘|‘l‘|‘m‘|
 		     ‘n‘|‘o‘|‘p‘|‘q‘|‘r‘|‘s‘|‘t‘|‘u‘|‘v‘|‘w‘|‘x‘|‘y‘|‘z‘|
@@ -10,11 +10,30 @@ Startsymbol: <Programm>
 		      ‘N‘|‘O‘|‘P‘|‘Q‘|‘R‘|‘S‘|‘T‘|‘U‘|‘V‘|‘W‘|‘X‘|‘Y‘|‘Z‘
 <Ziffer>	 ::= 0|1|2|3|4|5|6|7|8|9
 
+<Statements> ::= {<Statement>}
+
+<Declarations> ::= {<Declaration>}
+
+<Statement> ::= <assignment> | <forLoop> | <whileLoop> | <ifCondition>
+
+<expr> ::= <Bezeichner> | <int_const> | <float_const> | <string_const> |
+            <expr> '+' <expr> |
+            <expr> '*' <expr> |
+            <expr> '-' <expr> |
+            <expr> '/' <expr> |
+            <expr> '&' <expr> |
+            <expr> '|' <expr> |
+            <expr> '<' <expr> |
+            <expr> '>' <expr> |
+            <expr> '=' <expr> |
+            '(' <expr> ')' |
+            '-' <expr> |
+            '+' <expr>
 
 <Bezeichner> ::= <Buchstabe>{<Buchstabe>|<Ziffer>}
 <Satz> ::= <Buchstabe>|<Ziffer>|<Leerzeichen>{<Buchstabe>|<Ziffer>|<Leerzeichen>}
-<Intconst> ::= <Ziffer>{<Ziffer>}
-<Floatconst> ::= <Ziffer>{<Ziffer>}'.'<Ziffer>{<Ziffer>}
+<int_const> ::= <Ziffer>{<Ziffer>}
+<float_const> ::= <Ziffer>{<Ziffer>}'.'<Ziffer>{<Ziffer>}
 <Kommentar> ::= <EinzeiligerKommentar> | <MehrzeiligerKommentar>
 <EinzeiligerKommentar> ::= '#' { ALLES } '\n'
 <MehrzeiligerKommentar> ::= ' \'\'\' ' { ALLES | '\n' } ' \'\'\' ' 
@@ -23,52 +42,28 @@ Startsymbol: <Programm>
 <Integer> ::= 'int'
 <Float> ::= 'float'
 
-<Leerzeichen> ::= ' '{' '}
 <Trennzeichen> ::= ';'
 
-<Variablenart> ::= 'input'|'output'| e
+<Variablenart> ::= 'input'|'output'| epsilon
 <StringVariable>  ::= <Variablenart><String><Bezeichner>
 <IntegerVariable> ::= <Variablenart><Integer><Bezeichner>
 <FloatVariable>   ::= <Variablenart><Float><Bezeichner>
-
-<Zahl> ::= <FloatVariable>|<IntegerVariable>|<Intconst>|<Floatconst>
 
 <Gleichoperator> ::= '='
 <Stringsymbol> ::= '"'
 <KlammerAuf> ::= '('
 <KlammerZu> ::= ')'
 
-<Variablendeklaration> ::= {(<StringVariable>|<IntegerVariable>| <FloatVariable>) <Trennzeichen>}
+<Declaration> ::= (<StringVariable>|<IntegerVariable>|<FloatVariable>) ';'
 
-<Ausfuehrung> ::= 'begin'<Block>'end'
+<assignment> ::= <Bezeichner> '=' <expr>
 
-<Rechenoperator> ::= '+'|'-'|'*'|'/'|'%'
-<Stringoperator> ::= '+'
-<Vergleichsoperator> ::= '<'|'>'|'<='|'>='|'=='|'!='
-<Stringvergleichsoperator> ::= '=='|'!='
-<Logikoperator> ::= '&&'|'||'
+<string_const> ::= '"' {<Buchstabe>|<Ziffer>|' '} '"'
 
-<Block> ::= {<Zuweisung>|<IfStatement>|<ForSchleife>|<WhileSchleife>}
+<IfStatement> ::= 'if' '(' <expr> ')' '{' <Statements> '}' 'else' '{' <Statements> '}'
 
-<Zuweisung> ::= (<IntegerVariable>|<FloatVariable)<Gleichoperator>  <Zahl>{<Rechenoperator><Zahl>}<Trennzeichen>
-<Zuweisung> ::= <StringVariable><Gleichoperator><StringBuilder><Trennzeichen>
-
-<Text> ::= <Konkatenation> | <StringVariable>
-<StringBuilder> ::= <Text>{<Stringoperator><Text>}
-<Konkatenation> ::= <Stringsymbol><Satz><Stringsymbol>
-
-<IfStatement> ::= if'[<Leerzeichen>]<Condition><Then> {(<ElseIfStatement><Then>)}<ElseStatement>
-<Condition> ::= <KlammerAuf><KlammerAuf><Term><KlammerZu> {<Logikoperator><KlammerAuf><Term><KlammerZu>}<KlammerZu>
-<Condition> ::= <KlammerAuf><Term><KlammerZu>
-<Then> ::= '{'{<Block>}'}'
-<ElseIfStatement> ::= 'else'<Leerzeichen><IfStatement>
-<ElseStatement> ::= 'else'<Then>
-
-<Term> ::= <Text><Stringvergleichsoperator><Text>
-<Term> ::= <Zahl><Vergleichsoperator><Zahl>
-
-<ForSchleife> ::= 'for'<KlammerAuf>(<Intconst>|<IntegerVariable>)<KlammerZu><Then>
-<WhileSchleife> ::= 'while'<Condition><Then>
+<ForSchleife> ::= 'for'<KlammerAuf> (<int_const> | <Bezeichner>)<KlammerZu> '{' <Statements> '}'
+<WhileSchleife> ::= 'while' '(' <expr> ')' '{' <Statements> '}'
 
 
 
@@ -79,25 +74,23 @@ Startsymbol: <Programm>
 4. ALLES enthält alle möglichen Zeichen außer '\n'
 
 
-// n! mit Sprache x darstellen
+# n! mit Sprache x darstellen
 
 output int erg;
 int n;
 input int i;
 
-// Initialisierung
+# Initialisierung
 output int erg = 1;
-//n = 5;
 int n = i;
 
-// Operation
-begin
-for(int i)
+# Operation
+for(i)
 {
-	output int erg = int erg * int n;
-	int n = int n - 1;
+	erg = erg * n;
+	n = n - 1;
 }
-end
+
 
 
 

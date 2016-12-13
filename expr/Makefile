@@ -7,7 +7,7 @@
 ###############################################################################
 
 # The executable to produce:
-MAIN		= expr-pars
+MAIN		= Merk-Treyer-Zachmann
 
 # Source files
 SRC_C		= main.c

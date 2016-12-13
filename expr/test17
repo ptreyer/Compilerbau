@@ -1,0 +1,4 @@
+--should fail
+if (1<2) {
+  int i=1;
+}

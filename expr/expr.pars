@@ -57,6 +57,7 @@ stmt_lo = <
       = forLoop.
       = whileLoop.
       = expr.
+      = ifCon.
     >.
     = stmt_l stmt.
   >.
@@ -140,9 +141,10 @@ forLoop = <
 >.
 
 whileLoop = while_tok '(' expr ')' '{' stmt_lo '}'.
+ifCon = if_tok '(' expr ')' '{' stmt_lo '}' else_tok '{' stmt_lo '}'.
 
 /* Tokens */
 int_const:    [Value: long]   {Value := 0;      } .
 float_const:  [Value: double] {Value := 0.0;    } .
-string_const: [Value: tString]  {Value := NoString;   } .
+string_const: [Value: tStringRef]  {Value := NoString;   } .
 identifier:   [Name:  tIdent] {Name  := NoIdent;} .

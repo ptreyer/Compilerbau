@@ -139,6 +139,8 @@ INSERT RULES #STD#
 #STD# "output": {return output_tok;}
 #STD# "for": {return for_tok;}
 #STD# "while": {return while_tok;}
+#STD# "if": {return if_tok;}
+#STD# "else": {return else_tok;}
 
 #STD# \": {
   yyStart(STR);

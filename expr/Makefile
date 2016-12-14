@@ -37,6 +37,10 @@ test:
 	done
 
 
+tar: clean
+	
+	cd .. && tar -czvf Merk-Treyer-Zachmann.tar.gz expr
+
 ###############################################################################
 
 # Create the Parser

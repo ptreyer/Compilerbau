@@ -2,6 +2,7 @@
  * Desc    A simple pocket computer (scanner, parser, evaluator)
  * Kind:     Parser specification (solution)
  * Autho   Prof. Dr. Juergen Vollmer <vollmer@dhbw-karlsruhe.de>
+ * Author  Waldemar Merk, Patrick Treyer, Gabriel Zachmann
  * $Id: expr.pars.in,v 1.6 2011/05/05 14:00:04 vollmer Exp $
  */
 

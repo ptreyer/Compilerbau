@@ -36,6 +36,10 @@ test:
 	  ./$(MAIN) $$f; echo;	\
 	done
 
+# export as tar
+tar: clean
+	cd .. && tar -czvf Merk-Treyer-Zachmann.tar.gz Merk-Treyer-Zachmann
+
 
 ###############################################################################
 

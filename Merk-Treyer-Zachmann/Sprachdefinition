@@ -1,0 +1,97 @@
+﻿Die Sprache X	von Waldemar Merk, Patrick Treyer, Gabriel Zachmann
+
+Startsymbol: <Programm>
+
+<Programm> 	 ::= [<Declarations>] [<Statements>] 
+
+<Buchstabe>  ::= ‘a‘|‘b‘|‘c‘|‘d‘|‘e‘|‘f‘|‘g‘|‘h‘|‘i‘|‘j‘|‘k‘|‘l‘|‘m‘|
+		     ‘n‘|‘o‘|‘p‘|‘q‘|‘r‘|‘s‘|‘t‘|‘u‘|‘v‘|‘w‘|‘x‘|‘y‘|‘z‘|
+		     ‘A‘|‘B‘|‘C‘|‘D‘|‘E‘|‘F‘|‘G‘|‘H‘|‘I‘|‘J‘|‘K‘|‘L‘|‘M‘|
+		      ‘N‘|‘O‘|‘P‘|‘Q‘|‘R‘|‘S‘|‘T‘|‘U‘|‘V‘|‘W‘|‘X‘|‘Y‘|‘Z‘
+<Ziffer>	 ::= 0|1|2|3|4|5|6|7|8|9
+
+<Statements> ::= {<Statement>}
+
+<Declarations> ::= {<Declaration>}
+
+<Statement> ::= <assignment> | <forLoop> | <whileLoop> | <ifCondition>
+
+<expr> ::= <Bezeichner> | <int_const> | <float_const> | <string_const> |
+            <expr> '+' <expr> |
+            <expr> '*' <expr> |
+            <expr> '-' <expr> |
+            <expr> '/' <expr> |
+            <expr> '&' <expr> |
+            <expr> '|' <expr> |
+            <expr> '<' <expr> |
+            <expr> '>' <expr> |
+            <expr> '=' <expr> |
+            '(' <expr> ')' |
+            '-' <expr> |
+            '+' <expr>
+
+<Bezeichner> ::= <Buchstabe>{<Buchstabe>|<Ziffer>}
+<Satz> ::= <Buchstabe>|<Ziffer>|<Leerzeichen>{<Buchstabe>|<Ziffer>|<Leerzeichen>}
+<int_const> ::= <Ziffer>{<Ziffer>}
+<float_const> ::= <Ziffer>{<Ziffer>}'.'<Ziffer>{<Ziffer>}
+<Kommentar> ::= <EinzeiligerKommentar> | <MehrzeiligerKommentar>
+<EinzeiligerKommentar> ::= '#' { ALLES } '\n'
+<MehrzeiligerKommentar> ::= ' \'\'\' ' { ALLES | '\n' } ' \'\'\' ' 
+
+<String> ::= 'String'
+<Integer> ::= 'int'
+<Float> ::= 'float'
+
+<Trennzeichen> ::= ';'
+
+<Variablenart> ::= 'input'|'output'| epsilon
+<StringVariable>  ::= <Variablenart><String><Bezeichner>
+<IntegerVariable> ::= <Variablenart><Integer><Bezeichner>
+<FloatVariable>   ::= <Variablenart><Float><Bezeichner>
+
+<Gleichoperator> ::= '='
+<Stringsymbol> ::= '"'
+<KlammerAuf> ::= '('
+<KlammerZu> ::= ')'
+
+<Declaration> ::= (<StringVariable>|<IntegerVariable>|<FloatVariable>) ';'
+
+<assignment> ::= <Bezeichner> '=' <expr>
+
+<string_const> ::= '"' {<Buchstabe>|<Ziffer>|' '} '"'
+
+<IfStatement> ::= 'if' '(' <expr> ')' '{' <Statements> '}' 'else' '{' <Statements> '}'
+
+<ForSchleife> ::= 'for'<KlammerAuf> (<int_const> | <Bezeichner>)<KlammerZu> '{' <Statements> '}'
+<WhileSchleife> ::= 'while' '(' <expr> ')' '{' <Statements> '}'
+
+
+
+// Allgemeinwissen
+1. Vorrangregeln
+2. Rechenoperationen
+3. Vergleichsoperationen
+4. ALLES enthält alle möglichen Zeichen außer '\n'
+
+
+# n! mit Sprache x darstellen
+
+output int erg;
+int n;
+input int i;
+
+# Initialisierung
+output int erg = 1;
+int n = i;
+
+# Operation
+for(i)
+{
+	erg = erg * n;
+	n = n - 1;
+}
+
+
+
+
+

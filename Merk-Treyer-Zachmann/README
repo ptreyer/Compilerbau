@@ -1,0 +1,22 @@
+###############################################################################
+# Project:  COCKTAIL training
+# Descr:    LR parser for an expression language
+# Kind:     README
+# Author:   Prof. Dr. Juergen Vollmer <vollmer@dhbw-karlsruhe.de>
+# Author:   Waldemar Merk, Patrick Treyer, Gabriel Zachmann
+# $Id: README,v 1.9 2011/05/05 14:00:40 vollmer Exp $
+###############################################################################
+
+This directory describes the implementation of an LR parser for
+our language X.
+
+The files:
+	expr.pars	          The parser specification
+	expr.scan	          The scanner specification
+	main.c              C-main program
+	test*               Some test sources
+	Merk-Tryer-Zachmann the executable to be produced
+	Makefile
+  Sprachdefinition    The definition o the language X
+	README
+

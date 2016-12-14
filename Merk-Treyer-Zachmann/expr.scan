@@ -2,7 +2,8 @@
  * Descr:    A simple pocket computer (scanner, parser, evaluator)
  * Kind:     Scanner specification
  * Author:   Prof. Dr. Juergen Vollmer <vollmer@dhbw-karlsruhe.de>
- * $Id: expr-solution.scan,v 1.1 2011/05/05 13:59:55 vollmer Exp $
+ * Author:   Waldemar Merk, Patrick Treyer, Gabriel Zachmann
+ * $Id: expr.scan,v 1.3 2010/04/23 20:39:36 vollmer Exp $
  */
 
 SCANNER expr_scan
@@ -34,8 +35,7 @@ INSERT ErrorAttribute
 LOCAL {
 /* user-defined local variables of the generated GetToken routine */
 # define MAX_STRING_LEN 2048
-char string[MAX_STRING_LEN];
-int nesting = 0;
+char string[MAX_STRING_LEN];int len;
 }
 
 DEFAULT {
@@ -54,12 +54,12 @@ EOF {
     /* ok */
     break;
   case COMMENT:
-    Message ("unclosed C-comment",
+    Message ("unclosed comment",
 	     xxError, expr_scan_Attribute.Position);
     break;
-  case COMMENT2:
-    Message ("unclosed Modula-comment",
-	     xxError, expr_scan_Attribute.Position);
+  case STR:
+    Message ("String not closed", 
+      xxError, expr_scan_Attribute.Position);
     break;
   default:
     Message ("OOPS: that should not happen!!",
@@ -75,7 +75,7 @@ DEFINE /* some abbreviations */
   digit  = {0-9}       .
 
 /* define start states, note STD is defined by default */
-START COMMENT, COMMENT2
+START COMMENT, STR
 
 RULES
 
@@ -97,42 +97,47 @@ RULES
         { /* comment up to end of line, nothing to do */
         }
 
-/* C-style comment */
-#STD# "/*" :
-	{ /**/
+/* comment */
+#STD# "'''" :
+	{ 
 	  yyStart (COMMENT);
 	}
 
-#COMMENT# - {*\n\t} + | "*" :
+#COMMENT# - {'\n\t} + | "'" | "''" :
         {}
 
-#COMMENT# "*/" :
+#COMMENT# "'''" :
         {yyStart (STD);
 	}
 
-/* Modula2-style nested comment */
-#STD,COMMENT2# "(*" :
-	{ yyStart (COMMENT2);
-	  nesting ++;
-	}
-
-#COMMENT2# - {*(\n\t} + | "*" | "(" :
-        {}
-
-#COMMENT2# "*)" :
-        { nesting --;
-	  if (nesting == 0) {
-	    yyStart (STD);
-	  }
-	}
+#STD# "#" ANY* : {}
 
 INSERT RULES #STD#
 
-/* identifiers */
-#STD# letter (letter | digit) * :
-	{expr_scan_Attribute.identifier.Name =
-			MakeIdent (expr_scan_TokenPtr, expr_scan_TokenLength);
-	 return identifier;
-	}
+#STD# \": {
+  yyStart(STR);
+  len = 0;
+}
+
+#STR# (digit|letter|" ")* : {
+  if (len +expr_scan_TokenLength+1 >=MAX_STRING_LEN) {
+    len =0;
+  } else
+  len += expr_scan_GetWord(&string[len]);
+}
+
+#STR# \" : {
+  yyStart(STD);
+  string[len] = '\0';
+  expr_scan_Attribute.string_const.Value = malloc(len);
+  strcpy(expr_scan_Attribute.string_const.Value, string);
+  return string_const;
+}
+
+#STD# letter (letter | digit)*: {
+  expr_scan_Attribute.identifier.Name = MakeIdent(expr_scan_TokenPtr,
+  expr_scan_TokenLength);
+  return identifier;
+}
 
 /**********************************************************************/

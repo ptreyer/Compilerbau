@@ -1,5 +1,5 @@
--- an expression language
+#an expression language
 
--- expect at least 1 errors
+#expect at least 1 errors
 
 i = 3 + 4+

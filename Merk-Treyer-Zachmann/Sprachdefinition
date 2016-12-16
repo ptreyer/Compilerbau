@@ -51,8 +51,6 @@ Startsymbol: <Programm>
 
 <Gleichoperator> ::= '='
 <Stringsymbol> ::= '"'
-<KlammerAuf> ::= '('
-<KlammerZu> ::= ')'
 
 <Declaration> ::= (<StringVariable>|<IntegerVariable>|<FloatVariable>) ';'
 
@@ -62,7 +60,7 @@ Startsymbol: <Programm>
 
 <IfStatement> ::= 'if' '(' <expr> ')' '{' <Statements> '}' 'else' '{' <Statements> '}'
 
-<ForSchleife> ::= 'for'<KlammerAuf> (<int_const> | <Bezeichner>)<KlammerZu> '{' <Statements> '}'
+<ForSchleife> ::= 'for' '(' (<int_const> | <Bezeichner>) ')' '{' <Statements> '}'
 <WhileSchleife> ::= 'while' '(' <expr> ')' '{' <Statements> '}'
 
 

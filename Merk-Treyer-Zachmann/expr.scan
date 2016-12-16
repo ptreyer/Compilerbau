@@ -25,6 +25,7 @@ GLOBAL {
 /* code to be put into Scanner.c */
 # include <stdlib.h>
 # include "Errors.h"
+# include "StringM.h"
 
 /* Insert the routine computing "error-values" of attributes, in case the
  * parser decides during error repair to insert a token.
@@ -93,9 +94,6 @@ RULES
 	 return float_const;
 	}
 
-#STD# < "--" ANY * > :
-        { /* comment up to end of line, nothing to do */
-        }
 
 /* comment */
 #STD# "'''" :
@@ -130,7 +128,7 @@ INSERT RULES #STD#
   yyStart(STD);
   string[len] = '\0';
   expr_scan_Attribute.string_const.Value = malloc(len);
-  strcpy(expr_scan_Attribute.string_const.Value, string);
+  expr_scan_Attribute.string_const.Value = PutString(string, len);
   return string_const;
 }
 

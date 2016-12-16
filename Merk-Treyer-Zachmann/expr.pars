@@ -95,8 +95,6 @@ stringVar = varType String identifier.
 intVar    = varType int identifier.
 floatVar  = varType float identifier.
 
-declaration_lo = <
-  =. //epsilon
   declaration_l = <
     declaration = <
       = stringVar ';'.
@@ -105,10 +103,10 @@ declaration_lo = <
     >.
     = declaration_l declaration.
   >.
->.
-    assignment = <
-      = identifier '=' expr ';'.
-    >.
+
+  assignment = <
+    = identifier '=' expr ';'.
+  >.
 
 forLoop = <
   = for '(' int_const ')' '{' stmt_lo '}'.

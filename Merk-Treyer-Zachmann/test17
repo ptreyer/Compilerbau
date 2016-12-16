@@ -1,4 +1,4 @@
---should fail
+#should fail
 if (1<2) {
  i=1;
 }
